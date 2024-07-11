@@ -1,0 +1,27 @@
+<%- include("../includes/head.ejs") %>
+ <%- include("../includes/navbar.ejs") %>
+<main class="main-content">
+  <% if (prods.length > 0) { %>
+  <div class="grid-container">
+    <% for(let product of prods) { %>
+    <article class="grid-item">
+      <header>
+        <h1 class="product-title"><%=product.title%></h1>
+      </header>
+      <div class="card-image">
+        <img src="<%= product.imageURL %>" alt="<%= product.title %>">
+      </div>
+      <div class="card-content">
+        <h2 class="product-price"><%= product.price %></h2>
+        <p class="product-description"><%= product.description %></p>
+      </div>
+          <div class="card__actions">
+            <a href="/products/<%= product.id %>" class="btn">details</a>
+            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+          </div>
+      <% } %>
+    </div>
+    <% } %>
+  </article>
+</main>
+<%- include("../includes/end.ejs") %>
