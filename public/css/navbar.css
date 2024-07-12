@@ -32,7 +32,7 @@ html {
   font-size: 20px;
   cursor: pointer;
   z-index: 5;
-  background-color: #333;
+  background-color: var(--main-green);
   border-radius: 50%;
 }
 

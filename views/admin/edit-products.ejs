@@ -1,4 +1,6 @@
-<%- include("../includes/head.ejs") %> <%- include("../includes/navbar.ejs") %>
+<%- include("../includes/head.ejs") %>
+<link rel="stylesheet" href="/css/form.css" />
+<%- include("../includes/navbar.ejs") %>
 <main class="main-content">
   <form
     class="product-form"
@@ -20,7 +22,7 @@
         type="text"
         name="imageURL"
         id="imageURL"
-        value="<% if (editing) { %><%= product.imageUrl %><% } %>"
+        value="<% if (editing) { %><%= product.imageURL %><% } %>"
       />
     </div>
     <div class="form-control">
@@ -40,7 +42,7 @@
       >
     </div>
     <% if (editing) { %>
-    <input type="hidden" value="<%= product._id %>" name="productId" />
+    <input type="hidden" value="<%= product.id %>" name="productId" />
     <% } %>
 
     <button class="btn" type="submit">
