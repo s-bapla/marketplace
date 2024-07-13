@@ -1,29 +1,38 @@
-USE node-complete;
+CREATE DATABASE IF NOT EXISTS node_complete;
+
+USE node_complete;
 
 DROP TABLE IF EXISTS cart_products;
+DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
 
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE products (
     id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     price DOUBLE NOT NULL,
     description TEXT NOT NULL,
-    imageURL VARCHAR(255) NOT NULL
+    imageURL TEXT NOT NULL
 );
 
-DROP TABLE IF EXISTS cart;
 CREATE TABLE cart (
     id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    created_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    userId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE cart_products (
+CREATE TABLE product_cart (
     id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
     cart_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-    FOREIGN KEY (cart_id)
-        REFERENCES cart (id),
-    FOREIGN KEY (product_id)
-        REFERENCES products (id)
+    FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );

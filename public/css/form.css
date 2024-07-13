@@ -1,15 +1,10 @@
-/* Basic Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 /* Main Content Styling */
 .main-content {
-  padding: 3.5rem;
-  max-width: 600px;
-  margin: 10px auto;
+  padding-top: 3.5rem;
+  margin: 1rem auto;
+  max-width: 600px;;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

@@ -1,8 +1,9 @@
 const db = require("../util/database");
 
 class Cart {
-  constructor(createdAt) {
+  constructor(createdAt, userId) {
     this.createdAt = createdAt;
+    this.userId = userId
   }
 
   // Instance methods
@@ -13,16 +14,18 @@ class Cart {
   // Static methods
 
   // Create a new cart
-  static createCart() {
+  static createCart(userId) {
     return db.execute(
-      "INSERT INTO cart (created_at) VALUES (NOW())"
+      "INSERT INTO cart (created_at, userId) VALUES (NOW(), ?)", [
+        userId
+      ]
     )
   }
 
-  // Find a cart by ID
-  static findById(cartId) {
-    return db.execute("SELECT * FROM cart WHERE id = ?", [
-      cartId,
+  // Find a cart by userID
+  static findByUserId(userId) {
+    return db.execute("SELECT * FROM cart WHERE userId = ?", [
+      userId,
     ]);
   }
 

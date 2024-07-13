@@ -1,4 +1,4 @@
-const db = require("./util/database");
+const db = require("../util/database");
 
 class Product_Cart {
   constructor(productId, quantity) {
@@ -19,8 +19,28 @@ class Product_Cart {
   // Find all products in a cart
   static findProductsInCart(cartId) {
     return db.execute(
-      "SELECT * FROM product_cart WHERE cart_id = ?",
+      ` SELECT 
+                p.id AS product_id,
+                p.title,
+                p.price,
+                p.description,
+                p.imageURL,
+                pc.quantity
+            FROM 
+                product_cart pc
+            JOIN 
+                products p ON pc.product_id = p.id
+            WHERE 
+                pc.cart_id = ?
+        `,
       [cartId]
+    );
+  }
+
+  static findProductInCart(cartId, productId) {
+    return db.execute(
+      "SELECT * FROM product_cart WHERE cart_id = ? AND product_id = ?",
+      [cartId, productId]
     );
   }
 
@@ -41,4 +61,4 @@ class Product_Cart {
   }
 }
 
-module.exports = ProductCart;
+module.exports = Product_Cart;

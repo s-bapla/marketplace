@@ -65,7 +65,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 0;
+  margin-top: 0 !important;
   list-style: none;
   color: var(--main-white);
 }
