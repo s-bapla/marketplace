@@ -48,11 +48,15 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+
 CREATE TABLE order_products (
     id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
+    product_title VARCHAR(100) NOT NULL,
+    product_price DOUBLE NOT NULL,
+    product_description TEXT NOT NULL,
+    product_imageURL TEXT NOT NULL,
     quantity INT NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );

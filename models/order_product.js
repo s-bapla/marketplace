@@ -9,21 +9,21 @@ class OrderProduct {
   }
 
   static findItemsInOrder(orderId) {
-    return db.execute(
-      `
-      SELECT order_products.*, products.title, products.price, products.description, products.imageURL
-      FROM order_products
-      JOIN products ON order_products.product_id = products.id
-      WHERE order_products.order_id = ?
-    `,
-      [orderId]
-    );
+    return db.execute("SELECT * FROM order_products WHERE order_id = ?", [orderId]);
   }
 
-  static addItemToOrder(orderId, productId, quantity) {
+  static addItemToOrder(orderId, productId, productTitle, productPrice, productDescription, productImageURL, quantity) {
     return db.execute(
-      "INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?)",
-      [orderId, productId, quantity]
+      "INSERT INTO order_products (order_id, product_id, product_title, product_price, product_description, product_imageURL, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        orderId,
+        productId,
+        productTitle,
+        productPrice,
+        productDescription,
+        productImageURL,
+        quantity,
+      ]
     );
   }
 
@@ -42,4 +42,4 @@ class OrderProduct {
   }
 }
 
-module.exports = OrderProduct
+module.exports = OrderProduct;

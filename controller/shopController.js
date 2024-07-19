@@ -142,6 +142,10 @@ exports.postOrder = (req, res, next) => {
         return OrderProduct.addItemToOrder(
           orderId,
           item.product_id,
+          item.title,
+          item.price,
+          item.description,
+          item.imageURL,
           item.quantity
         );
       });
@@ -167,6 +171,7 @@ exports.getOrders = (req, res, next) => {
     .then((orders) => {
       const orderList = orders[0].map((order) => {
         return OrderProduct.findItemsInOrder(order.id).then(([items]) => {
+          console.log(items);
           return {
             id: order.id,
             products: items,
