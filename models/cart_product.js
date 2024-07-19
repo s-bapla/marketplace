@@ -52,6 +52,12 @@ class Product_Cart {
     );
   }
 
+  static removeProductsFromCart(cartId) {
+    return db.execute(
+      "DELETE FROM product_cart WHERE cart_id = ?", [cartId]
+    )
+  }
+
   // Update product quantity in a cart
   static updateProductQuantity(cartId, productId, quantity) {
     return db.execute(

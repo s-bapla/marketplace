@@ -2,8 +2,12 @@ CREATE DATABASE IF NOT EXISTS node_complete;
 
 USE node_complete;
 
-DROP TABLE IF EXISTS cart_products;
+
+ 
+DROP TABLE IF EXISTS order_products;
+DROP TABLE IF EXISTS product_cart;
 DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS users;
 
@@ -35,4 +39,20 @@ CREATE TABLE product_cart (
     quantity INT NOT NULL,
     FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE order_products (
+    id INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
