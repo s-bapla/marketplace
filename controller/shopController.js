@@ -10,6 +10,7 @@ module.exports.getProducts = (req, res, next) => {
       pageTitle: "product list",
       path: "shop/product-list",
       prods: result[0],
+      isAuthenticated: req.session.isLoggedIn
     });
   });
 };
@@ -20,6 +21,7 @@ module.exports.getIndex = (req, res, next) => {
       pageTitle: "Homepage",
       path: "shop/index",
       prods: result[0],
+      isAuthenticated: req.session.isLoggedIn
     });
   });
 };
@@ -32,13 +34,15 @@ module.exports.getProduct = (req, res, next) => {
         pageTitle: "product details",
         product: product[0][0],
         path: "shop/product-details",
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
 };
 
 module.exports.getCart = (req, res, next) => {
-  const userId = req.user.id;
+  console.log(req.session.user);
+  const userId = req.session.user[0][0].id;
   Cart.findByUserId(userId)
     .then((cart) => {
       if (!cart[0][0]) {
@@ -51,6 +55,7 @@ module.exports.getCart = (req, res, next) => {
                     res.render("shop/cart", {
                       pageTitle: "cart",
                       products: products[0],
+                      isAuthenticated: req.sesion.isLoggedIn
                     });
                   })
                   .catch((err) => {
@@ -66,6 +71,7 @@ module.exports.getCart = (req, res, next) => {
             res.render("shop/cart", {
               pageTitle: "cart",
               products: products[0],
+              isAuthenticated: req.session.isLoggedIn,
             });
           })
           .catch((err) => {
@@ -77,7 +83,7 @@ module.exports.getCart = (req, res, next) => {
 };
 
 module.exports.addToCart = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.session.user[0][0].id;
   const productId = req.body.productId;
 
   Cart.findByUserId(userId)
@@ -113,7 +119,7 @@ module.exports.addToCart = (req, res, next) => {
 };
 
 module.exports.deleteProduct = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.session.user[0][0].id;
   const productId = req.body.productId;
   console.log(userId, productId);
 
@@ -127,7 +133,7 @@ module.exports.deleteProduct = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.session.user[0][0].id;
   let orderId;
   Order.createOrder(userId)
     .then((result) => {
@@ -165,7 +171,7 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.session.user[0][0].id;
 
   Order.findByUserId(userId)
     .then((orders) => {
@@ -184,6 +190,7 @@ exports.getOrders = (req, res, next) => {
       res.render("shop/order", {
         pageTitle: "orders",
         orders: orders,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch(err => console.log(err))
