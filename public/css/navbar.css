@@ -81,10 +81,6 @@ html {
   width: 100%;
 }
 
-.navbar-list-item form {
-  margin-top: 1rem;
-}
-
 .navbar-list-item a {
   color: var(--main-white);
   text-decoration: none;
@@ -93,6 +89,10 @@ html {
   padding-top: 1.25rem;
   white-space: nowrap;
 }
+
+.navbar-list-item form {
+    padding-top: 1.25rem;
+  }
 
 @media (min-width: 768px) {
   #menu-icon {
@@ -120,7 +120,12 @@ html {
     margin: 0 20px;
   }
 
+  .navbar-list-item a {
+    padding-top: 0;
+  }
+
   .navbar-list-item form {
+    padding-top: 0;
     align-items: center;
   }
 }

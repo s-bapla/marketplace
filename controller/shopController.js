@@ -55,7 +55,7 @@ module.exports.getCart = (req, res, next) => {
                     res.render("shop/cart", {
                       pageTitle: "cart",
                       products: products[0],
-                      isAuthenticated: req.sesion.isLoggedIn
+                      isAuthenticated: req.session.isLoggedIn
                     });
                   })
                   .catch((err) => {

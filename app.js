@@ -4,11 +4,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
+const csrf = require("csurf");
+const flash = require("connect-flash");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const authRoutes = require('./routes/auth')
-const User = require("./models/user")
+const authRoutes = require("./routes/auth");
+const User = require("./models/user");
 
 const app = express();
 
@@ -21,7 +23,7 @@ const options = {
 };
 
 const sessionStore = new MySQLStore(options);
-
+const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -41,21 +43,34 @@ app.use(
   })
 );
 
+app.use(csrfProtection);
+app.use(flash());
+
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
   User.findById(req.session.user.id)
-    .then(user => {
+    .then((user) => {
       console.log(user);
       req.user = user[0][0];
       next();
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
+});
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
 });
 
 app.use(authRoutes);
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
-
-app.listen(3000);
+console.log(`PORT: ${process.env.PORT}`);
+app.listen(process.env.PORT || 3000, "0.0.0.0", () => {
+  console.log(
+    `Server is running on http://0.0.0.0:${process.env.PORT || 3000}`
+  );
+});

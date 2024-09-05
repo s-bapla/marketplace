@@ -3,7 +3,7 @@
   flex-direction: column;
   flex: 1;
   background-color: #f4f4f4;
-  padding: 3.5rem;
+  padding: 3.75rem;
   min-height: 100vh;
 }
 
@@ -47,7 +47,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color ease-in-out .3s;
+  transition: background-color ease-in-out 0.3s;
   align-self: center;
   margin-bottom: 5px;
 }
@@ -61,10 +61,30 @@
   gap: 8px; /* Space between the elements */
 }
 
+.user-message {
+  margin: auto;
+  width: 90%;
+  border: 1px solid #4771fa;
+  padding: 0.5rem;
+  border-radius: 3px;
+  background: #b9c9ff;
+  text-align: center;
+}
+
+.user-message--error {
+  border-color: red;
+  background: rgb(255, 176, 176);
+  color: red;
+}
+
 @media (min-width: 768px) {
   .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px
+    gap: 15px;
+  }
+
+  .user-message {
+    width: 30rem;
   }
 }
